@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.myfty</groupId>
-	<artifactId>expence-tracker</artifactId>
+	<artifactId>expense-tracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>expence-tracker</name>
 	<description>Monthly expence tracker application</description>

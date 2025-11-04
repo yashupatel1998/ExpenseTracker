@@ -1,4 +1,4 @@
-package com.myfty.expence_tracker.model;
+package com.myfty.expense_tracker.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

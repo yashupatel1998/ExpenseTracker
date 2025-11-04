@@ -1,6 +1,6 @@
-package com.myfty.expence_tracker.repository;
+package com.myfty.expense_tracker.repository;
 
-import com.myfty.expence_tracker.model.Expense;
+import com.myfty.expense_tracker.model.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
