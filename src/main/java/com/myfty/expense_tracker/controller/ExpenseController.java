@@ -1,7 +1,7 @@
-package com.myfty.expence_tracker.controller;
+package com.myfty.expense_tracker.controller;
 
-import com.myfty.expence_tracker.model.Expense;
-import com.myfty.expence_tracker.service.ExpenseService;
+import com.myfty.expense_tracker.model.Expense;
+import com.myfty.expense_tracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.time.YearMonth;
-import java.time.LocalDate;
 
 @Controller
 public class ExpenseController {

@@ -1,4 +1,4 @@
-package com.myfty.expence_tracker;
+package com.myfty.expense_tracker;
 
 
 import org.springframework.boot.SpringApplication;

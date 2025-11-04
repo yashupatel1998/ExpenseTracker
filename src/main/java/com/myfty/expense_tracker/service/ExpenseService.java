@@ -1,7 +1,7 @@
-package com.myfty.expence_tracker.service;
+package com.myfty.expense_tracker.service;
 
-import com.myfty.expence_tracker.model.Expense;
-import com.myfty.expence_tracker.repository.ExpenseRepository;
+import com.myfty.expense_tracker.model.Expense;
+import com.myfty.expense_tracker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
