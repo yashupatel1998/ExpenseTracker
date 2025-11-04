@@ -104,25 +104,6 @@ This project is configured for **Git** using a comprehensive `.gitignore` file t
 
 ---
 
-## 📁 Project Structure
-
-ExpenseTracker/
-├── src/
-│ ├── main/
-│ │ ├── java/com/expensetracker/
-│ │ │ ├── model/Expense.java
-│ │ │ ├── repository/ExpenseRepository.java
-│ │ │ ├── service/ExpenseService.java
-│ │ │ ├── controller/ExpenseController.java
-│ │ │ └── ExpenseTrackerApplication.java
-│ │ └── resources/
-│ │ ├── templates/index.html
-│ │ └── application.properties
-├── pom.xml
-└── README.md
-
-
----
 
 ## 🧾 License
 This project is open source and available under the [MIT License](LICENSE).
