@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Expense Tracker</title>
+    <!-- Tailwind CSS CDN for quick styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for a cleaner UI */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+        }
+        .container-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #4c51bf 0%, #667eea 100%);
+        }
+        .btn-primary {
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .table-row-hover:hover {
+            background-color: #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-bg py-8 mb-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+        <h1 class="text-4xl font-extrabold tracking-tight">Monthly Expense Tracker</h1>
+        <p class="mt-1 text-xl opacity-80">
+            Tracking Expenses for: <span th:text="${currentMonth}">October 2023</span>
+        </p>
+        <div class="mt-4 p-4 bg-white text-gray-800 rounded-lg container-shadow inline-block">
+            <span class="text-lg font-semibold">Total Monthly Expenses:</span>
+            <span class="text-2xl font-bold text-red-600 ml-2" th:text="${#numbers.formatCurrency(monthlyTotal)}">$0.00</span>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+
+    <!-- Expense Input Form -->
+    <div class="bg-white p-6 rounded-xl container-shadow">
+        <h2 class="text-2xl font-bold mb-4 text-gray-700">Add New Expense</h2>
+
+        <!-- The th:object links the form fields to the Expense object in the Model -->
+        <form th:action="@{/save}" th:object="${newExpense}" method="post" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+
+            <!-- Description -->
+            <div class="md:col-span-2">
+                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <input type="text" id="description" th:field="*{description}" required
+                       class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2.5">
+            </div>
+
+            <!-- Amount -->
+            <div>
+                <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount ($)</label>
+                <input type="number" step="0.01" id="amount" th:field="*{amount}" required
+                       class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2.5">
+            </div>
+
+            <!-- Date -->
+            <div>
+                <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                <input type="date" id="date" th:field="*{date}" required
+                       class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2.5">
+            </div>
+
+            <!-- Category -->
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select id="category" th:field="*{category}" required
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2.5">
+                    <option value="Groceries">Groceries</option>
+                    <option value="Rent">Rent/Housing</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="md:col-span-5">
+                <button type="submit"
+                        class="btn-primary w-full md:w-auto mt-4 md:mt-0 px-6 py-2.5 text-white bg-indigo-600 hover:bg-indigo-700 font-semibold rounded-lg shadow-lg">
+                    Record Expense
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Expense List Table -->
+    <div class="bg-white p-6 rounded-xl container-shadow">
+        <h2 class="text-2xl font-bold mb-4 text-gray-700">Expense History</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                <!-- Iterates over the list of expenses passed from the Controller -->
+                <tr th:each="expense : ${expenseList}" class="table-row-hover">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${expense.date}">2023-11-01</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${expense.description}">Coffee and pastry</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700" th:text="${expense.category}">Groceries</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-right text-red-600"
+                        th:text="${#numbers.formatCurrency(expense.amount)}">$5.50</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a th:href="@{/delete/{id}(id=${expense.id})}"
+                           class="text-red-600 hover:text-red-900 font-medium"
+                           onclick="return confirm('Are you sure you want to delete this expense?');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(expenseList)}">
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 italic">No expenses recorded for this month. Start by adding one above!</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
